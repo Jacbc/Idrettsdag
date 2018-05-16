@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elevside</title>
+    <link rel="icon" href="alpaca.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
+    <link rel="stylesheet" href="master.css">
+</head>
+
+
+
+<body id="elevside">
+
+
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAglQlT-lgGJpu64ibu-MBtCmnmCYtTUJc",
+        authDomain: "idrettsdag-3a4b7.firebaseapp.com",
+        databaseURL: "https://idrettsdag-3a4b7.firebaseio.com",
+        projectId: "idrettsdag-3a4b7",
+        storageBucket: "idrettsdag-3a4b7.appspot.com",
+        messagingSenderId: "154813789502"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<form action="" id="regLag">
+    <label for="selSkole">Skole</label>
+    <select id="selSkole"></select>
+    <label for="selIdrett">Idrett</label>
+    <select id="selIdrett" required></select>
+    <label for="inpLagnavn">Lagnavn</label>
+    <input type="text" name="inpLagnavn" id="inpLagnavn">
+    <label for="antSpillere">Antall spillere</label>
+    <input type="number" name="antSpillere" id="antSpillere">
+    <button class="button">Send</button>
+</form>
+
+<script>
+    // Henter elementene inn i Javascript
+    var regSkole = document.getElementById("regSkole");
+    var regSport = document.getElementById("regSport");
+
+    var inpSkole = document.getElementById("inpSkole");
+    var inpKommune = document.getElementById("inpKommune");
+
+    var inpIdrett = document.getElementById("inpIdrett");
+    var inpSted = document.getElementById("inpSted");
+
+    var idrettSelect = document.getElementById("idrettSelect");
+    var registrerteLag = document.getElementById("registrerteLag");
+
+    var selSkole = document.getElementById("selSkole");
+    var selIdrett = document.getElementById("selIdrett");
+
+    var inpLagnavn = document.getElementById("inpLagnavn");
+    var antSpillere = document.getElementById("antSpillere");
+
+
+    // Database
+    var database = firebase.database();
+    var skoleDB = database.ref("Skole");
+    var idrettDB = database.ref("Idrett");
+    var lagDB = database.ref("Lag");
+
+
+    function sendLag(event){
+      console.log("sendLag");
+      event.preventDefault();
+      var sendtSkole = selSkole.value;
+      var sendtIdrett = selIdrett.value;
+      var sendtLagnavn = inpLagnavn.value;
+      var sendtSpillere = antSpillere.value;
+      inpLagnavn.value = "";
+      antSpillere.value = "";
+      lagDB.push({
+        "skole" : sendtSkole,
+        "idrett" : sendtIdrett,
+        "lagnavn" : sendtLagnavn,
+        "sendtSpillere" : sendtSpillere
+      })
+    };
+
+
+    function hentSkole(snapshot) {
+        var regSkole = snapshot.key;
+        var regSkoleName = snapshot.val();
+
+        selSkole.innerHTML += `<option value="${regSkole}">
+            ${regSkoleName.skole}
+            </option>`;
+    }
+
+    function hentIdrett(snapshot) {
+        var regIdrett = snapshot.key;
+        var regIdrettNavn = snapshot.val();
+
+        selIdrett.innerHTML += `<option value="${regIdrett}">
+            ${regIdrettNavn.idrett}
+            </option>`;
+    }
+
+
+    regLag.onsubmit = sendLag;
+
+    /* lagDB.on("child_added", visLag); */
+    idrettDB.on("child_added", hentIdrett);
+    skoleDB.on("child_added", hentSkole);
+
+</script>
+
+</body>
+</html>

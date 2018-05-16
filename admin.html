@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administratorside</title>
+    <link rel="icon" href="alpaca.svg">
+    <link rel="stylesheet" href="master.css">
+
+</head>
+
+<style>
+</style>
+
+<body id="adminside">
+
+<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAglQlT-lgGJpu64ibu-MBtCmnmCYtTUJc",
+        authDomain: "idrettsdag-3a4b7.firebaseapp.com",
+        databaseURL: "https://idrettsdag-3a4b7.firebaseio.com",
+        projectId: "idrettsdag-3a4b7",
+        storageBucket: "idrettsdag-3a4b7.appspot.com",
+        messagingSenderId: "154813789502"
+    };
+    firebase.initializeApp(config);
+</script>
+
+
+    <form action="" id="regSkole">
+        <label for="inpSkole">Skole</label>
+        <input type="text" id="inpSkole" required>
+        <label for="inpKommune">Kommune</label>
+        <input type="text" id="inpKommune" required>
+        <button class="button">Send</button>
+    </form>
+
+    <form action="" id="regSport">
+        <label for="inpIdrett">Idretter</label>
+        <input type="text" id="inpIdrett" required>
+        <label for="inpSted">Sted</label>
+        <input type="text" id="inpSted" required>
+        <button class="button">Send</button>
+    </form>
+
+
+
+<div class="forms">
+    <select onchange="sortIdrett()" id="idrettSelect">
+        <option value="visAlle">Vis alle</option>
+    </select>
+        <table>
+            <thead>
+            <tr>
+                <td>Lagnavn</td>
+                <td>Skole</td>
+                <td>Idrett</td>
+            </tr>
+            </thead>
+        <tbody id="registrerteLag">
+
+        </tbody>
+    </table>
+</div>
+<script>
+
+    // Henter elementene inn i Javascript
+    var regSkole = document.getElementById("regSkole");
+    var regSport = document.getElementById("regSport");
+
+    var inpSkole = document.getElementById("inpSkole");
+    var inpKommune = document.getElementById("inpKommune");
+
+    var inpIdrett = document.getElementById("inpIdrett");
+    var inpSted = document.getElementById("inpSted");
+
+    var idrettSelect = document.getElementById("idrettSelect");
+    var registrerteLag = document.getElementById("registrerteLag");
+
+    var selSkole = document.getElementById("selSkole");
+    var selIdrett = document.getElementById("selIdrett");
+
+    // Database
+    var database = firebase.database();
+    var skoleDB = database.ref("Skole");
+    var idrettDB = database.ref("Idrett");
+    var lagDB = database.ref("Lag");
+
+
+
+    //lytterfunskjon for å sende hendelsene
+    function registrerSkole(event) {
+        event.preventDefault();
+
+        var skole = inpSkole.value;
+        var kommune = inpKommune.value;
+
+        skoleDB.push({
+            "skole": skole,
+            "kommune": kommune
+        });
+
+        // Setter feltene blanke ved enter
+        inpSkole.value = "";
+        inpKommune.value = "";
+    };
+
+
+    function registrerIdrett(event) {
+        event.preventDefault();
+
+        var idrett = inpIdrett.value;
+        var sted = inpSted.value;
+
+        idrettDB.push({
+            "idrett": idrett,
+            "sted": sted
+        });
+
+        // Setter feltene blanke ved enter
+        inpIdrett.value = "";
+        inpSted.value = "";
+    };
+
+
+    function visLag(snapshot) {
+      console.log("visLag");
+        var lagValue = snapshot.val();
+
+        var hentSkole = database.ref("Skole/" + lagValue.Skole);
+        hentSkole.on("value", function(snapshotSkole) {
+                 var valgtSkoleForLagVal = snapshotSkole.val();
+
+            var hentIdrett = database.ref("Idrett/" + lagValue.Idrett);
+            hentIdrett.on("value", function(snapshotIdrett) {
+                var valgtIdrettForLagVal = snapshotIdrett.val();
+
+                registrerteLag.innerHTML += `
+          <tr>
+          <td>${lagValue.Lagnavn}</td>
+          <td>${valgtSkoleForLagVal.skole}</td>
+          <td>${valgtIdrettForLagVal.idrett}</td>
+          </tr>
+          `;
+            });
+        });
+    ;
+    }
+
+    function visLag2(snapshot){
+      console.log("visLag2");
+      var lagValue2 = snapshot.val();
+
+      var hentSkole2 = database.ref("Skole/" + lagValue2.skole);
+      hentSkole2.on("value", function(snapshotSkole2){
+        var valgtSkoleForLag = snapshotSkole2.val();
+
+        var hentIdrett2 = database.ref("Idrett/" + lagValue2.idrett);
+        hentIdrett2.on("value", function(snapshotIdrett2){
+          var valgtIdrettForLag = snapshotIdrett2.val();
+
+          registrerteLag.innerHTML += `
+          <tr>
+          <td>
+          ${lagValue2.lagnavn}
+          </td>
+          <td>
+          ${valgtSkoleForLag.skole}
+          </td>
+          <td>
+          ${valgtIdrettForLag.idrett}
+          </td>
+          </tr>
+          `;
+        });
+      });
+    };
+
+
+    function sortIdrett() {
+
+       var idrettSelectVal = idrettSelect.value;
+
+        registrerteLag.innerHTML = "";
+
+        lagDB.orderByChild("Idrett").equalTo(idrettSelectVal).on("child_added", visLag);
+
+        if (idrettSelectVal == "visAlle") {
+            registrerteLag.innerHTML = "";
+            lagDB.on("child_added", visLag);
+
+        };
+    };
+
+
+
+    regSkole.onsubmit = registrerSkole;
+    regSport.onsubmit = registrerIdrett;
+
+
+    lagDB.on("child_added", visLag2);
+
+</script>
+
+</body>
+</html>

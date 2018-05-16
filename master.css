@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+}
+@font-face {
+    font-family: "My Custom Font";
+    src: url("fonts/Alien-Encounters-Bold.ttf") format("truetype");
+}
+
+div {
+    color: #e8eac0;
+}
+
+form {
+    background: #f3f3f3;
+    margin: 2rem;
+    padding: 2rem;
+}
+
+table {
+    border: 1px solid greenyellow;
+    background: #a1a1a1;
+    padding: 3rem;
+}
+
+#elevside {
+    background: coral;
+}
+
+#adminside {
+    background: darkslateblue;
+    padding: 3rem;
+}
+
+#GoAdministrator {
+    border: solid plum 3px;
+    background: #515151;
+    width: 37.5vw;
+    height: 35vh;
+
+    text-align: center;
+    float: left;
+}
+
+#GoElevside {
+    border: solid orange 3px;
+    background: #a1a1a1;
+    width: 37.5vw;
+    height: 35vh;
+    margin: 0 2.5vw ;
+    text-align: center;
+    float: left;
+}
+
+#text {
+
+}
+
+#blank {
+
+
+}
+
+.front_welcome {
+   align-content: center;
+    align-items: center;
+    padding-top: 14.5vw;
+    padding-left: 7.1vw;
+}
+
+.customfont {
+    font-family: "My Custom Font";
+    font-size: 5rem;
+
+    line-height: 350px;
+    white-space: nowrap;
+}
