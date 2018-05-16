@@ -5,9 +5,23 @@
     font-family: "My Custom Font";
     src: url("fonts/Alien-Encounters-Bold.ttf") format("truetype");
 }
+h1 {
+    font-family: "My Custom Font";
+    font-size: 4rem;
+    text-align: center;
+    color: #9c57ff;
+}
 
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4.5rem;
+    max-width: 80vw;
+    margin: auto;
+}
 div {
-    color: #e8eac0;
+    color: #f34868;
 }
 
 form {
@@ -18,9 +32,10 @@ form {
 }
 
 table {
-    border: 1px solid greenyellow;
-    background: #a1a1a1;
+    border: 1.5px solid greenyellow;
+    background: #7fffc2;
     padding: 3rem;
+    grid-column: span 2;
 }
 
 #elevside {

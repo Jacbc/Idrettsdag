@@ -26,21 +26,24 @@
     };
     firebase.initializeApp(config);
 </script>
-
+<header>
+    <h1>Administratorside</h1>
+</header>
+<main>
 
     <form action="" id="regSkole">
         <label for="inpSkole">Skole</label>
-        <input type="text" id="inpSkole" required>
+        <input type="text" id="inpSkole" required><br><br>
         <label for="inpKommune">Kommune</label>
-        <input type="text" id="inpKommune" required>
+        <input type="text" id="inpKommune" required><br><br>
         <button class="button">Send</button>
     </form>
 
     <form action="" id="regSport">
         <label for="inpIdrett">Idretter</label>
-        <input type="text" id="inpIdrett" required>
+        <input type="text" id="inpIdrett" required><br><br>
         <label for="inpSted">Sted</label>
-        <input type="text" id="inpSted" required>
+        <input type="text" id="inpSted" required><br><br>
         <button class="button">Send</button>
     </form>
 
@@ -63,6 +66,8 @@
         </tbody>
     </table>
 </div>
+</main>
+
 <script>
 
     // Henter elementene inn i Javascript
