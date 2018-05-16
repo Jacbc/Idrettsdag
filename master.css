@@ -66,7 +66,6 @@ table {
     align-items: center;
     padding-top: 14.5vw;
     padding-left: 7.1vw;
-    background-color: ;
 }
 
 .customfont {
@@ -88,7 +87,6 @@ table {
 
 .text {
     font-size: 4vw;
-    font-family: $font;
     font-weight: normal;
     font-style: normal;
     text-transform: uppercase;
@@ -101,7 +99,7 @@ table {
 
 table {
     padding: 2rem;
-    margin 5rem;
+    margin: 2rem;
     width: 40vw;
 }
 
