@@ -11,9 +11,10 @@ div {
 }
 
 form {
-    background: #f3f3f3;
+    background: #6bd4f3;
     margin: 2rem;
     padding: 2rem;
+    background: linear-gradient(to bottom right, #00f9ff, #fdff00)
 }
 
 table {
@@ -76,25 +77,13 @@ table {
     white-space: nowrap;
 }
 
-@import url(//fontlibrary.org/face/effects-eighty);
-$font: 'EffectsEighty';
+
 
 * {
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
 }
 
-html, body {
-    height: 100%;
-    background-color: lighten(#090D19, 20%);
-    background-image: url(https://media.giphy.com/media/JqiYS6Xvdh0IM/giphy.gif);
-    background-size: cover;
-    background-position: 50% 40%;
-}
-
-body {
-    mix-blend-mode: screen;
-}
 
 
 .text {
@@ -110,3 +99,17 @@ body {
     mix-blend-mode: screen;
 }
 
+table {
+    padding: 2rem;
+    margin 5rem;
+    width: 40vw;
+}
+
+table thead tr td {
+    font-weight: bold;
+    color: #090D19;
+}
+
+tbody tr td {
+    text-transform: capitalize;
+}

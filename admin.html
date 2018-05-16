@@ -128,11 +128,11 @@
       console.log("visLag");
         var lagValue = snapshot.val();
 
-        var hentSkole = database.ref("Skole/" + lagValue.Skole);
+        var hentSkole = database.ref("Skole/" + lagValue.skole);
         hentSkole.on("value", function(snapshotSkole) {
                  var valgtSkoleForLagVal = snapshotSkole.val();
 
-            var hentIdrett = database.ref("Idrett/" + lagValue.Idrett);
+            var hentIdrett = database.ref("Idrett/" + lagValue.idrett);
             hentIdrett.on("value", function(snapshotIdrett) {
                 var valgtIdrettForLagVal = snapshotIdrett.val();
 
@@ -172,13 +172,14 @@
     };
 
 
+
     function sortIdrett() {
 
        var idrettSelectVal = idrettSelect.value;
 
         registrerteLag.innerHTML = "";
 
-        lagDB.orderByChild("Idrett").equalTo(idrettSelectVal).on("child_added", visLag);
+        lagDB.orderByChild("idrett").equalTo(idrettSelectVal).on("child_added", visLag);
 
         if (idrettSelectVal == "visAlle") {
             registrerteLag.innerHTML = "";
@@ -191,9 +192,8 @@
 
     regSkole.onsubmit = registrerSkole;
     regSport.onsubmit = registrerIdrett;
-
-
     lagDB.on("child_added", visLag2);
+    idrettDB.on("child_added", hentIdrett);
 
 </script>
 
