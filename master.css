@@ -12,6 +12,10 @@ h1 {
     color: #9c57ff;
 }
 
+header {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
 
 main {
     display: grid;
