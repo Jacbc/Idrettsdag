@@ -129,30 +129,6 @@
     };
 
 
-    function visLag(snapshot) {
-      console.log("visLag");
-        var lagValue = snapshot.val();
-
-        var hentSkole = database.ref("Skole/" + lagValue.skole);
-        hentSkole.on("value", function(snapshotSkole) {
-                 var valgtSkoleForLagVal = snapshotSkole.val();
-
-            var hentIdrett = database.ref("Idrett/" + lagValue.idrett);
-            hentIdrett.on("value", function(snapshotIdrett) {
-                var valgtIdrettForLagVal = snapshotIdrett.val();
-
-                registrerteLag.innerHTML += `
-          <tr>
-          <td>${lagValue.Lagnavn}</td>
-          <td>${valgtSkoleForLagVal.skole}</td>
-          <td>${valgtIdrettForLagVal.idrett}</td>
-          </tr>
-          `;
-            });
-        });
-    ;
-    }
-
     function visLag2(snapshot){
       console.log("visLag2");
       var lagValue2 = snapshot.val();
@@ -178,17 +154,28 @@
 
 
 
+    function hentIdrett(snapshot) {
+        var regIdrett = snapshot.key;
+        var regIdrettNavn = snapshot.val();
+
+        idrettSelect.innerHTML += `<option value="${regIdrett}">
+            ${regIdrettNavn.idrett}
+            </option>`;
+    }
+
+
+
     function sortIdrett() {
 
        var idrettSelectVal = idrettSelect.value;
 
         registrerteLag.innerHTML = "";
 
-        lagDB.orderByChild("idrett").equalTo(idrettSelectVal).on("child_added", visLag);
+        lagDB.orderByChild("idrett").equalTo(idrettSelectVal).on("child_added", visLag2);
 
         if (idrettSelectVal == "visAlle") {
             registrerteLag.innerHTML = "";
-            lagDB.on("child_added", visLag);
+            lagDB.on("child_added", visLag2);
 
         };
     };
